@@ -1,5 +1,7 @@
 # Audit d'intégrité inter-SGBD — TP 4
 
+**Contributeurs :** Deschant Kounou · Ulrich Kpassi-Gobi
+
 **Périmètre :** les 4 tables fédérées par Spark.
 - `clients` : MySQL
 - `produits` : PostgreSQL

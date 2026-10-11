@@ -2,6 +2,10 @@
 
 Big Data Engineering — Master — UCAD / DMI / FST (Prof. S. Ndiaye)
 
+**Travail de groupe — contributeurs :** Deschant Kounou · Ulrich Kpassi-Gobi
+
+📄 Rapport : [`docs/RAPPORT_TP4.pdf`](docs/RAPPORT_TP4.pdf)
+
 Ce TP joint dans **une seule SparkSession** quatre tables réparties dans **quatre SGBD
 différents**, entre lesquels n'existe aucune clé étrangère :
 
@@ -28,6 +32,7 @@ différents**, entre lesquels n'existe aucune clé étrangère :
 │   └── TP4_federation_multi_sgbd.ipynb   # complété et exécuté avec ses sorties
 ├── docs/
 │   ├── AUDIT_TP4.md          # anomalies d'intégrité + tableau de relevés
+│   ├── RAPPORT_TP4.pdf       # rapport de synthèse (scripts/generer_rapport.py)
 │   └── sujet/                # énoncés PDF
 └── requirements.txt
 ```
