@@ -1,0 +1,9 @@
+.venv/
+jars/
+notebooks/jars/
+.ipynb_checkpoints/
+spark-warehouse/
+metastore_db/
+derby.log
+__pycache__/
+.DS_Store

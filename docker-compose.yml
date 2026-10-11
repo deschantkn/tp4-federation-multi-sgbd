@@ -1,0 +1,65 @@
+# TP4 - Federation multi-SGBD : les 4 SGBD du sujet en conteneurs.
+# Les scripts sql/init_tp4_*.sql sont montes en lecture seule et executes
+# par scripts/setup.sh (equivalent de la Partie A du sujet).
+name: tp4-federation
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: tp4-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: RootTp4!
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sql:/sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-pRootTp4!"]
+      interval: 5s
+      retries: 30
+
+  postgres:
+    image: postgres:16
+    container_name: tp4-postgres
+    environment:
+      POSTGRES_PASSWORD: PostgresTp4!
+    ports:
+      - "5433:5432"   # 5432 deja occupe sur la machine hote
+    volumes:
+      - ./sql:/sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      retries: 30
+
+  oracle:
+    # Oracle XE 21c n'existe pas en ARM : Oracle Database Free 23ai (PDB FREEPDB1)
+    image: gvenzl/oracle-free:23-slim-faststart
+    container_name: tp4-oracle
+    environment:
+      ORACLE_PASSWORD: OracleTp4
+    ports:
+      - "1521:1521"
+    volumes:
+      - ./sql:/sql:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      retries: 60
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64   # emulation Rosetta sur Apple Silicon
+    container_name: tp4-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Express
+      MSSQL_SA_PASSWORD: SqlServerTp4!
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./sql:/sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P 'SqlServerTp4!' -Q 'SELECT 1' -b -o /dev/null"]
+      interval: 10s
+      retries: 60
